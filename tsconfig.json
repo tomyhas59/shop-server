@@ -1,12 +1,20 @@
 {
+  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "target": "ES2018",
-    "module": "commonjs",
-    /*    "strict": true, */
-    "esModuleInterop": true,
+    "target": "ES5",
+    "lib": ["ESNext"],
+    "allowJs": false,
     "skipLibCheck": true,
-    "outDir": "./dist",
-    "types": ["express"]
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }

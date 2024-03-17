@@ -7,16 +7,16 @@ import resolvers from "./resolvers";
   const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
-    context: null,
+    context: ({ req }) => ({ req }),
   });
 
-  const app = express();
+  const app: any = express();
   await server.start();
   server.applyMiddleware({
     app,
     path: "/graphql",
     cors: {
-      origin: ["http://localhost:3000"],
+      origin: ["http://localhost:3000", "https://studio.apollographql.com"],
       credentials: true,
     },
   });
