@@ -2,12 +2,18 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import schema from "./schema";
 import resolvers from "./resolvers";
+import { DBField, readDB } from "./dbController";
 
 (async () => {
   const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
-    context: ({ req }) => ({ req }),
+    context: {
+      db: {
+        products: readDB(DBField.PRODUCTS),
+        cart: readDB(DBField.CART),
+      },
+    },
   });
 
   const app: any = express();
@@ -21,5 +27,7 @@ import resolvers from "./resolvers";
     },
   });
   await app.listen({ port: 8000 });
+
+  readDB(DBField.PRODUCTS);
   console.log("server 실행 중");
 })();

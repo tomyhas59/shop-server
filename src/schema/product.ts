@@ -2,12 +2,12 @@ import { gql } from "apollo-server-express";
 
 const productSchema = gql`
   type Product {
-    id: String!
+    id: ID!
     imageUrl: String!
     price: Int!
     title: String!
     description: String
-    createAt: Float
+    createAt: String
   }
 
   extend type Query {

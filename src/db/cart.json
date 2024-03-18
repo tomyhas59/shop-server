@@ -1,0 +1,48 @@
+[
+ {
+  "id": "1",
+  "amount": 8
+ },
+ {
+  "id": "2",
+  "amount": 7
+ },
+ {
+  "id": "5",
+  "amount": 2
+ },
+ {
+  "id": "6",
+  "amount": 1,
+  "product": {
+   "description": "임시상품내용6",
+   "id": "6",
+   "imageUrl": "https://picsum.photos/id/15/200/200",
+   "price": 50000,
+   "title": "임시상품6"
+  }
+ },
+ {
+  "id": "7",
+  "amount": 1,
+  "product": {
+   "description": "임시상품내용7",
+   "id": "7",
+   "imageUrl": "https://picsum.photos/id/16/200/200",
+   "price": 50000,
+   "title": "임시상품7"
+  }
+ },
+ {
+  "id": "4",
+  "amount": 2
+ },
+ {
+  "id": "3",
+  "amount": 5
+ },
+ {
+  "id": "10",
+  "amount": 2
+ }
+]

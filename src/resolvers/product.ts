@@ -1,22 +1,12 @@
 import { Resolvers } from "./types";
 
-const mockProducts = (() =>
-  Array.from({ length: 20 }).map((_, i) => ({
-    id: i + 1 + "",
-    imageUrl: `https://picsum.photos/id/${i + 10}/200/200`,
-    price: 50000,
-    title: `임시상품${i + 1}`,
-    description: `임시상품내용${i + 1}`,
-    createAt: new Date(1646735500542 + i * 1000 * 60 * 60 * 10).toString(),
-  })))();
-
 const productResolver: Resolvers = {
   Query: {
-    products: (parent, args, context, info) => {
-      return mockProducts;
+    products: (parent, args, context) => {
+      return context.db.products;
     },
-    product: (parent, { id }, context, info) => {
-      const found = mockProducts.find((item) => item.id === id);
+    product: (parent, { id }, { db }) => {
+      const found = db.products.find((item) => item.id === id);
       if (found) return found;
       return null;
     },

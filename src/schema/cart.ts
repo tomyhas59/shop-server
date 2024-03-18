@@ -3,10 +3,8 @@ import { gql } from "apollo-server-express";
 const cartSchema = gql`
   type CartItem {
     id: ID!
-    imageUrl: String
-    price: Int!
-    title: String!
     amount: Int!
+    product: Product!
   }
 
   #GraphQL 스키마에서 Query 타입을 확장하여 새로운 필드를 추가
