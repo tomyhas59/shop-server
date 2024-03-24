@@ -65,6 +65,12 @@ const cartResolver: Resolvers = {
         return id;
       }
     },
+    deleteAllCart: (parent, args, { db }, info) => {
+      db.cart = [];
+      setJSON(db.cart);
+      return db.cart;
+    },
+
     executePay: (parent, { ids }, { db }, info) => {
       const newCartData = db.cart.filter(
         (cartItem) => !ids.includes(cartItem.id)
