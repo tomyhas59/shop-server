@@ -1,1 +1,13 @@
-[]
+[
+ {
+  "id": "2",
+  "amount": 1,
+  "product": {
+   "description": "임시상품내용2",
+   "id": "2",
+   "imageUrl": "https://picsum.photos/id/11/200/200",
+   "price": 50000,
+   "title": "임시상품2"
+  }
+ }
+]
