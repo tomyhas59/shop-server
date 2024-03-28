@@ -13,6 +13,12 @@ const productResolver: Resolvers = {
       return null;
     },
   },
+
+  Mutation: {
+    addProduct: () => {},
+    updateProduct: () => {},
+    deleteProduct: () => {},
+  },
 };
 
 export default productResolver;

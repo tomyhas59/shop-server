@@ -11,7 +11,7 @@ const productSchema = gql`
   }
 
   extend type Query {
-    products(cursor: [ID!]): [Product!]
+    products(cursor: ID!): [Product!] #-->프론트 graphql 넘겨주기
     product(id: ID!): Product!
   }
 `;
@@ -19,7 +19,7 @@ const productSchema = gql`
 export default productSchema;
 
 /* const GET_PRODUCT = gql`
-  query GET_PRODUCT($id: string) {
+  query GET_PRODUCT($id: ID!) {
     id
     imageUrl
     price
