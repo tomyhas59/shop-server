@@ -4,7 +4,6 @@ import { resolve } from "path";
 export enum DBField {
   CART = "cart",
   PRODUCTS = "products",
-  
 }
 //파일 경로를 정규화하고 절대 경로로 변환
 const basePath = resolve();

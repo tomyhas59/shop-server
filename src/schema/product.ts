@@ -7,24 +7,41 @@ const productSchema = gql`
     price: Int!
     title: String!
     description: String
-    createAt: String
+    createdAt: String
   }
 
   extend type Query {
-    products(cursor: [ID!]): [Product!]
+    products(cursor: ID!, showDeleted: Boolean): [Product!] #-->프론트 graphql 넘겨주기
     product(id: ID!): Product!
+  }
+
+  extend type Mutation {
+    addProduct(
+      imageUrl: String!
+      price: Int!
+      title: String!
+      description: String!
+    ): Product!
+    updateProduct(
+      id: ID!
+      imageUrl: String
+      price: Int
+      title: String
+      description: String
+    ): Product!
+    deleteProduct(id: ID!): ID!
   }
 `;
 
 export default productSchema;
 
 /* const GET_PRODUCT = gql`
-  query GET_PRODUCT($id: string) {
+  query GET_PRODUCT($id: ID!) {
     id
     imageUrl
     price
     title
     description
-    createAt
+    createdAt
   }
 `; */
