@@ -11,9 +11,16 @@ const productResolver: Resolvers = {
       /**args */ { cursor = "", showDeleted = false },
       context
     ) => {
+      const [hasCreatedAt, noCreatedAt] = [
+        context.db.products
+          .filter((product) => !!product.createdAt)
+          .sort((a, b) => b.createdAt! - a.createdAt!),
+        context.db.products.filter((product) => !product.createdAt),
+      ];
       const filteredDB = showDeleted
-        ? context.db.products
-        : context.db.products.filter((product) => !!product.createdAt);
+        ? [...hasCreatedAt, ...noCreatedAt]
+        : hasCreatedAt;
+
       const fromIndex =
         filteredDB.findIndex((product) => product.id === cursor) + 1;
       return filteredDB.slice(fromIndex, fromIndex + 15) || [];
@@ -58,14 +65,14 @@ const productResolver: Resolvers = {
     },
     deleteProduct: (parent, { id }, { db }) => {
       const existProductIndex = db.products.findIndex((item) => item.id === id);
-
       if (existProductIndex < 0) {
         throw new Error("없는 데이터입니다");
       }
-      const updatedProduct = { ...db.products[existProductIndex] };
-      delete updatedProduct.createdAt;
-      setJSON(db.products);
-      return id;
+      if (existProductIndex > -1) {
+        db.products.splice(existProductIndex, 1);
+        setJSON(db.products);
+        return id;
+      }
     },
   },
 };
