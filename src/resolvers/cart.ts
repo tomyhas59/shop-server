@@ -1,5 +1,5 @@
 import { DBField, writeDB } from "../dbController";
-import { Cart, Resolvers } from "./types";
+import { Cart, Product, Resolvers } from "./types";
 
 const setJSON = (data: Cart) => writeDB(DBField.CART, data);
 
@@ -31,7 +31,6 @@ const cartResolver: Resolvers = {
       const newItem = {
         id,
         amount: 1,
-        product: product,
       };
       db.cart.push(newItem);
       setJSON(db.cart);
@@ -75,6 +74,18 @@ const cartResolver: Resolvers = {
       const newCartData = db.cart.filter(
         (cartItem) => !ids.includes(cartItem.id)
       );
+      const finalCartData = db.cart.filter((cartItem) =>
+        ids.includes(cartItem.id)
+      );
+      if (
+        finalCartData.some((item) => {
+          const product = db.products.find(
+            (product: Product) => product.id === item.id
+          );
+          return product?.createdAt === undefined;
+        })
+      )
+        throw Error("삭제된 상품이 포함되어 결제를 진행할 수 없습니다.");
       db.cart = newCartData;
       setJSON(db.cart);
       return ids;
@@ -82,7 +93,9 @@ const cartResolver: Resolvers = {
   },
   CartItem: {
     product: (cartItem, args, context) =>
-      context.db.products.find((product: any) => product.id === cartItem.id),
+      context.db.products.find(
+        (product: Product) => product.id === cartItem.id
+      ),
   },
 };
 

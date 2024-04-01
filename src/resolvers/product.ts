@@ -68,11 +68,10 @@ const productResolver: Resolvers = {
       if (existProductIndex < 0) {
         throw new Error("없는 데이터입니다");
       }
-      if (existProductIndex > -1) {
-        db.products.splice(existProductIndex, 1);
-        setJSON(db.products);
-        return id;
-      }
+
+      db.products[existProductIndex].createdAt = undefined;
+      setJSON(db.products);
+      return id;
     },
   },
 };

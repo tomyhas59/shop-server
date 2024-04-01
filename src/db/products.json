@@ -436,8 +436,7 @@
   "imageUrl": "https://picsum.photos/id/54/200/200",
   "description": "임시상품내용54",
   "price": 10500,
-  "title": "임시상품54",
-  "createdAt": 1643396841540
+  "title": "임시상품54"
  },
  {
   "id": "8ee35e7b-0730-4808-8f0e-6d92f5fd8687",
@@ -460,319 +459,181 @@
   "imageUrl": "https://picsum.photos/id/57/200/200",
   "description": "임시상품내용57",
   "price": 16500,
-  "title": "임시상품57",
-  "createdAt": 1643450841540
+  "title": "임시상품57"
  },
  {
   "id": "4a40ad11-58f0-4ffc-9b28-b4584dc194a9",
   "imageUrl": "https://picsum.photos/id/58/200/200",
   "description": "임시상품내용58",
   "price": 14500,
-  "title": "임시상품58",
-  "createdAt": 1643468841540
+  "title": "임시상품58"
  },
  {
   "id": "b8790ec5-e38f-49ee-9ec8-564bfeed12dd",
   "imageUrl": "https://picsum.photos/id/59/200/200",
   "description": "임시상품내용59",
   "price": 14500,
-  "title": "임시상품59",
-  "createdAt": 1643486841540
+  "title": "임시상품59"
  },
  {
   "id": "c01870cd-5e8c-4be3-be88-4890e880abb2",
   "imageUrl": "https://picsum.photos/id/60/200/200",
   "description": "임시상품내용60",
   "price": 12500,
-  "title": "임시상품60",
-  "createdAt": 1643504841540
+  "title": "임시상품60"
  },
  {
   "id": "afd9f964-c7da-4fd1-9922-8f44c58b8439",
   "imageUrl": "https://picsum.photos/id/61/200/200",
   "description": "임시상품내용61",
   "price": 2500,
-  "title": "임시상품61",
-  "createdAt": 1643522841540
+  "title": "임시상품61"
  },
  {
   "id": "8a2f3abb-223a-4ac7-8ba2-dfb3602ec789",
   "imageUrl": "https://picsum.photos/id/62/200/200",
   "description": "임시상품내용62",
   "price": 11500,
-  "title": "임시상품62",
-  "createdAt": 1643540841540
+  "title": "임시상품62"
  },
  {
   "id": "49ab4298-a153-42dc-9afa-3976c596e2a2",
   "imageUrl": "https://picsum.photos/id/63/200/200",
   "description": "임시상품내용63",
   "price": 5500,
-  "title": "임시상품63",
-  "createdAt": 1643558841540
+  "title": "임시상품63"
  },
  {
   "id": "10e06b5c-47e4-48ae-b4c4-ba598f2eb7b8",
   "imageUrl": "https://picsum.photos/id/64/200/200",
   "description": "임시상품내용64",
   "price": 12500,
-  "title": "임시상품64",
-  "createdAt": 1643576841540
+  "title": "임시상품64"
  },
  {
   "id": "bf3fcb55-63d2-40a4-8125-2358ad2708fb",
   "imageUrl": "https://picsum.photos/id/65/200/200",
   "description": "임시상품내용65",
   "price": 10500,
-  "title": "임시상품65",
-  "createdAt": 1643594841540
+  "title": "임시상품65"
  },
  {
   "id": "c63e495f-fbfe-4269-9d4c-9bd80b6541a6",
   "imageUrl": "https://picsum.photos/id/66/200/200",
   "description": "임시상품내용66",
   "price": 11500,
-  "title": "임시상품66",
-  "createdAt": 1643612841540
+  "title": "임시상품66"
  },
  {
   "id": "626db720-3a26-4385-a7e1-ccced854d3ac",
   "imageUrl": "https://picsum.photos/id/67/200/200",
   "description": "임시상품내용67",
   "price": 17500,
-  "title": "임시상품67",
-  "createdAt": 1643630841540
+  "title": "임시상품67"
  },
  {
   "id": "16cf881e-1381-4081-9749-ba061edf65a2",
   "imageUrl": "https://picsum.photos/id/68/200/200",
   "description": "임시상품내용68",
   "price": 1500,
-  "title": "임시상품68",
-  "createdAt": 1643648841540
+  "title": "임시상품68"
  },
  {
   "id": "cce203f0-e9dc-4131-9b47-bd4f4ae270c2",
   "imageUrl": "https://picsum.photos/id/69/200/200",
   "description": "임시상품내용69",
   "price": 2500,
-  "title": "임시상품69",
-  "createdAt": 1643666841540
+  "title": "임시상품69"
  },
  {
   "id": "4f496f5b-8bb5-4011-a1cc-f647cc1d5d7b",
   "imageUrl": "https://picsum.photos/id/70/200/200",
   "description": "임시상품내용70",
   "price": 3500,
-  "title": "임시상품70",
-  "createdAt": 1643684841540
+  "title": "임시상품70"
  },
  {
   "id": "2e6f605b-70ee-4846-bf7e-0cf56f413acf",
   "imageUrl": "https://picsum.photos/id/71/200/200",
   "description": "임시상품내용71",
   "price": 2500,
-  "title": "임시상품71",
-  "createdAt": 1643702841540
+  "title": "임시상품71"
  },
  {
   "id": "53f7a71b-f049-487e-8f80-2a51eae9489d",
   "imageUrl": "https://picsum.photos/id/72/200/200",
   "description": "임시상품내용72",
   "price": 8500,
-  "title": "임시상품72",
-  "createdAt": 1643720841540
+  "title": "임시상품72"
  },
  {
   "id": "a15fb8ab-f927-4f90-95db-d7dd8e247795",
   "imageUrl": "https://picsum.photos/id/73/200/200",
   "description": "임시상품내용73",
   "price": 2500,
-  "title": "임시상품73",
-  "createdAt": 1643738841540
+  "title": "임시상품73"
  },
  {
   "id": "144cd91f-9c4c-45b8-b989-4a24d9b59d8f",
   "imageUrl": "https://picsum.photos/id/74/200/200",
   "description": "임시상품내용74",
   "price": 14500,
-  "title": "임시상품74",
-  "createdAt": 1643756841540
+  "title": "임시상품74"
  },
  {
   "id": "2472b670-e95f-408f-8cc0-cf2f5d260720",
   "imageUrl": "https://picsum.photos/id/75/200/200",
   "description": "임시상품내용75",
   "price": 13500,
-  "title": "임시상품75",
-  "createdAt": 1643774841540
+  "title": "임시상품75"
  },
  {
   "id": "434e9d8a-4a5f-4f67-8082-789f9e83c71f",
   "imageUrl": "https://picsum.photos/id/76/200/200",
   "description": "임시상품내용76",
   "price": 18500,
-  "title": "임시상품76",
-  "createdAt": 1643792841540
+  "title": "임시상품76"
  },
  {
   "id": "d8c6a0d5-b6ad-4d68-85c6-f7569718a209",
   "imageUrl": "https://picsum.photos/id/77/200/200",
   "description": "임시상품내용77",
   "price": 10500,
-  "title": "임시상품77",
-  "createdAt": 1643810841540
+  "title": "임시상품77"
  },
  {
   "id": "81f2fadb-f706-4303-b6fd-5ec293f1404b",
   "imageUrl": "https://picsum.photos/id/78/200/200",
   "description": "임시상품내용78",
   "price": 7500,
-  "title": "임시상품78",
-  "createdAt": 1643828841540
+  "title": "임시상품78"
  },
  {
   "id": "968de0ab-1a9f-4c89-be18-01977f76dfea",
   "imageUrl": "https://picsum.photos/id/79/200/200",
   "description": "임시상품내용79",
   "price": 18500,
-  "title": "임시상품79",
-  "createdAt": 1643846841540
+  "title": "임시상품79"
  },
  {
   "id": "1672b3a0-c696-4150-86cd-eba70a595e27",
   "imageUrl": "https://picsum.photos/id/80/200/200",
   "description": "임시상품내용80",
   "price": 16500,
-  "title": "임시상품80",
-  "createdAt": 1643864841540
+  "title": "임시상품80"
  },
  {
   "id": "8b79585e-3476-46ba-a6fb-1c7d8e91b846",
   "imageUrl": "https://picsum.photos/id/81/200/200",
   "description": "임시상품내용81",
   "price": 17500,
-  "title": "임시상품81",
-  "createdAt": 1643882841540
+  "title": "임시상품81"
  },
  {
   "id": "2de3ca62-24b2-45ee-9fe3-91972be9e665",
   "imageUrl": "https://picsum.photos/id/82/200/200",
   "description": "임시상품내용82",
   "price": 19500,
-  "title": "임시상품82",
-  "createdAt": 1643900841540
- },
- {
-  "id": "8f4388a3-3b11-4e2d-ba13-42398de1443e",
-  "imageUrl": "https://picsum.photos/id/83/200/200",
-  "description": "임시상품내용83",
-  "price": 6500,
-  "title": "임시상품83",
-  "createdAt": 1643918841540
- },
- {
-  "id": "1554c4c4-6c3e-455d-97f1-1ebe962c29aa",
-  "imageUrl": "https://picsum.photos/id/84/200/200",
-  "description": "임시상품내용84",
-  "price": 16500,
-  "title": "임시상품84",
-  "createdAt": 1643936841540
- },
- {
-  "id": "226b037e-97d9-4272-8a4d-40e6924550a7",
-  "imageUrl": "https://picsum.photos/id/85/200/200",
-  "description": "임시상품내용85",
-  "price": 10500,
-  "title": "임시상품85",
-  "createdAt": 1643954841540
- },
- {
-  "id": "4f332271-3e77-4cd6-b0ce-dc67212379e0",
-  "imageUrl": "https://picsum.photos/id/86/200/200",
-  "description": "임시상품내용86",
-  "price": 17500,
-  "title": "임시상품86",
-  "createdAt": 1643972841540
- },
- {
-  "id": "6a4bd478-3f2f-4cbb-b4db-85c97f46a4d3",
-  "imageUrl": "https://picsum.photos/id/87/200/200",
-  "description": "임시상품내용87",
-  "price": 12500,
-  "title": "임시상품87",
-  "createdAt": 1643990841540
- },
- {
-  "id": "d2125a7d-f115-49ad-9d0f-b04291709fac",
-  "imageUrl": "https://picsum.photos/id/88/200/200",
-  "description": "임시상품내용88",
-  "price": 5500,
-  "title": "임시상품88",
-  "createdAt": 1644008841540
- },
- {
-  "id": "60115b94-0ecc-44c2-bc35-6b038d55c9d0",
-  "imageUrl": "https://picsum.photos/id/89/200/200",
-  "description": "임시상품내용89",
-  "price": 7500,
-  "title": "임시상품89",
-  "createdAt": 1644026841540
- },
- {
-  "id": "9b90ee73-4a79-4d23-94d6-68ca22518de7",
-  "imageUrl": "https://picsum.photos/id/90/200/200",
-  "description": "임시상품내용90",
-  "price": 18500,
-  "title": "임시상품90",
-  "createdAt": 1644044841540
- },
- {
-  "id": "db3cdbe5-60d1-47a2-ada4-3eb8f4e4b86b",
-  "imageUrl": "https://picsum.photos/id/91/200/200",
-  "description": "임시상품내용91",
-  "price": 1500,
-  "title": "임시상품91",
-  "createdAt": 1644062841540
- },
- {
-  "id": "34c94d7f-a229-4242-9dd6-137003c79d89",
-  "imageUrl": "https://picsum.photos/id/92/200/200",
-  "description": "임시상품내용92",
-  "price": 17500,
-  "title": "임시상품92",
-  "createdAt": 1644080841540
- },
- {
-  "id": "63378bde-f57a-4e3a-988f-be839753a208",
-  "imageUrl": "https://picsum.photos/id/93/200/200",
-  "description": "임시상품내용93",
-  "price": 3500,
-  "title": "임시상품93",
-  "createdAt": 1644098841540
- },
- {
-  "id": "712da8c9-2b04-4bcd-a9ab-483c5e18853b",
-  "imageUrl": "https://picsum.photos/id/94/200/200",
-  "description": "임시상품내용94",
-  "price": 8500,
-  "title": "임시상품94",
-  "createdAt": 1644116841540
- },
- {
-  "id": "ca251e1c-5bc8-4673-8352-e26ae26b4e4f",
-  "imageUrl": "https://picsum.photos/id/95/200/200",
-  "description": "임시상품내용95",
-  "price": 1500,
-  "title": "임시상품95",
-  "createdAt": 1644134841540
- },
- {
-  "id": "1388db90-7952-442d-8001-594421ea7e62",
-  "imageUrl": "https://picsum.photos/id/96/200/200",
-  "description": "임시상품내용96",
-  "price": 13500,
-  "title": "임시상품96",
-  "createdAt": 1644152841540
+  "title": "임시상품82"
  }
 ]
