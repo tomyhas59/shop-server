@@ -1,18 +1,14 @@
 [
  {
   "id": "90af66e6-7575-49a3-a179-479078c37c8a",
+  "amount": 16
+ },
+ {
+  "id": "94b57ecb-1b3f-4f0b-a364-e7fa82d01ccc",
+  "amount": 4
+ },
+ {
+  "id": "8ee35e7b-0730-4808-8f0e-6d92f5fd8687",
   "amount": 2
- },
- {
-  "id": "d66e6aaa-bb65-40de-9d4c-bc86ba48e80a",
-  "amount": 1
- },
- {
-  "id": "895d7ada-5f1c-4b00-8260-79c68198ac59",
-  "amount": 1
- },
- {
-  "id": "407d2492-b6ae-470d-807e-3ef8bdd33487",
-  "amount": 1
  }
 ]

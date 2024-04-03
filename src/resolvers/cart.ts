@@ -5,7 +5,7 @@ const setJSON = (data: Cart) => writeDB(DBField.CART, data);
 
 const cartResolver: Resolvers = {
   Query: {
-    cart: (parent, args, context, info) => {
+    cartList: (parent, args, context, info) => {
       return context.db.cart;
     },
   },
