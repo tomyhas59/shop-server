@@ -1,34 +1,52 @@
 import { DBField, writeDB } from "../dbController";
+import { db } from "../firebase";
 import { Products, Resolvers } from "./types";
 import { v4 as uuid } from "uuid";
+import {
+  collection,
+  getDoc,
+  limit,
+  orderBy,
+  query,
+  doc,
+  DocumentData,
+  getDocs,
+  where,
+  startAfter,
+} from "firebase/firestore";
 
 const setJSON = (data: Products) => writeDB(DBField.PRODUCTS, data);
 
+const PAGE_SIZE = 15;
+
 const productResolver: Resolvers = {
   Query: {
-    products: (
+    products: async (
       parent,
-      /**args */ { cursor = "", showDeleted = false },
-      context
+      /**args */ { cursor = "", showDeleted = false }
     ) => {
-      const [hasCreatedAt, noCreatedAt] = [
-        context.db.products
-          .filter((product) => !!product.createdAt)
-          .sort((a, b) => b.createdAt! - a.createdAt!),
-        context.db.products.filter((product) => !product.createdAt),
-      ];
-      const filteredDB = showDeleted
-        ? [...hasCreatedAt, ...noCreatedAt]
-        : hasCreatedAt;
+      const products = collection(db, "products");
+      let queryOptions: any[] = [orderBy("createdAt", "desc")];
+      if (!showDeleted) queryOptions.unshift(where("createdAt", "!=", null));
+      if (cursor) queryOptions.push(startAfter(cursor));
 
-      const fromIndex =
-        filteredDB.findIndex((product) => product.id === cursor) + 1;
-      return filteredDB.slice(fromIndex, fromIndex + 15) || [];
+      const q = query(products, ...queryOptions, limit(PAGE_SIZE));
+      const snapshot = await getDocs(q);
+      const data: DocumentData[] = [];
+      snapshot.forEach((doc) => {
+        data.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      return data;
     },
-    product: (parent, { id }, { db }) => {
-      const found = db.products.find((item) => item.id === id);
-      if (found) return found;
-      return null;
+    product: async (parent, { id }) => {
+      const snapshot = await getDoc(doc(db, "products", id));
+      return {
+        ...snapshot.data(),
+        id: snapshot.id,
+      };
     },
   },
 
