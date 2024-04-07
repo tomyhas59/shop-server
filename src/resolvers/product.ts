@@ -26,7 +26,7 @@ const productResolver: Resolvers = {
       /**args */ { cursor = "", showDeleted = false }
     ) => {
       const products = collection(db, "products");
-      let queryOptions: any[] = [orderBy("createdAt", "desc")];
+      const queryOptions: any[] = [orderBy("createdAt", "desc")];
       if (!showDeleted) queryOptions.unshift(where("createdAt", "!=", null));
       if (cursor) queryOptions.push(startAfter(cursor));
 
