@@ -1,9 +1,12 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import "dotenv/config";
 import { getFirestore } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
+
+// Import other Firebase SDKs as needed
+// For example, if you need Firebase Auth, import it here
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,6 +21,6 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+// Export Firebase app and Firestore instance
 export default app;
-
 export const db = getFirestore(app);

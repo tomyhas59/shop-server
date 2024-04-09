@@ -1,5 +1,5 @@
 import { DBField, writeDB } from "../dbController";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { Products, Resolvers } from "./types";
 import { v4 as uuid } from "uuid";
 import {
@@ -27,9 +27,8 @@ const productResolver: Resolvers = {
     ) => {
       const products = collection(db, "products");
       const queryOptions: any[] = [orderBy("createdAt", "desc")];
-      if (!showDeleted) queryOptions.unshift(where("createdAt", "!=", null));
       if (cursor) queryOptions.push(startAfter(cursor));
-
+      if (!showDeleted) queryOptions.unshift(where("createdAt", "!=", null));
       const q = query(products, ...queryOptions, limit(PAGE_SIZE));
       const snapshot = await getDocs(q);
       const data: DocumentData[] = [];
@@ -39,6 +38,7 @@ const productResolver: Resolvers = {
           ...doc.data(),
         });
       });
+      console.log(data);
       return data;
     },
     product: async (parent, { id }) => {
