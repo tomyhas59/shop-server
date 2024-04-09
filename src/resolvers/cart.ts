@@ -7,14 +7,15 @@ const setJSON = (data: Cart) => writeDB(DBField.CART, data);
 
 const cartResolver: Resolvers = {
   Query: {
-    cartList: async (parent, args) => {
+    cart: async (parent, args) => {
       const cart = collection(db, "cart");
       const cartSnap = await getDocs(cart);
       const data: DocumentData[] = [];
       cartSnap.forEach((doc) => {
+        const d = doc.data();
         data.push({
           id: doc.id,
-          ...doc.data(),
+          ...d,
         });
       });
       console.log(data);
@@ -105,7 +106,6 @@ const cartResolver: Resolvers = {
     product: async (cartItem, args, context) => {
       const product = await getDoc(cartItem.product);
       const data = product.data() as any;
-
       return {
         ...data,
         id: product.id,

@@ -13,6 +13,10 @@ import {
   getDocs,
   where,
   startAfter,
+  serverTimestamp,
+  addDoc,
+  updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 const setJSON = (data: Products) => writeDB(DBField.PRODUCTS, data);
@@ -51,44 +55,41 @@ const productResolver: Resolvers = {
   },
 
   Mutation: {
-    addProduct: (
+    addProduct: async (
       parent,
       { imageUrl, price, title, description },
-      { db },
       info
     ) => {
       const newProduct = {
-        id: uuid(),
         imageUrl,
         price,
         title,
         description,
-        createdAt: Date.now(),
+        createdAt: serverTimestamp(),
       };
-      db.products.push(newProduct);
-      setJSON(db.products);
-      return newProduct;
+      const result = await addDoc(collection(db, "products"), newProduct);
+      const snapshot = await getDoc(result);
+      return {
+        ...snapshot.data(),
+        id: snapshot.id,
+      };
     },
-    updateProduct: (parent, { id, ...data }, { db }, info) => {
-      const existProductIndex = db.products.findIndex((item) => item.id === id);
+    updateProduct: async (parent, { id, ...data }, info) => {
+      const productRef = doc(db, "products", id);
 
-      if (existProductIndex < 0) {
-        throw new Error("없는 데이터입니다");
-      }
-      const updatedProduct = { ...db.products[existProductIndex], ...data };
+      if (!productRef) throw new Error("없는 데이터입니다");
+      await updateDoc(productRef, data);
+      const snap = await getDoc(productRef);
 
-      db.products.splice(existProductIndex, 1, updatedProduct);
-      setJSON(db.products);
-      return updatedProduct;
+      return {
+        ...snap.data(),
+        id: snap.id,
+      };
     },
-    deleteProduct: (parent, { id }, { db }) => {
-      const existProductIndex = db.products.findIndex((item) => item.id === id);
-      if (existProductIndex < 0) {
-        throw new Error("없는 데이터입니다");
-      }
-
-      db.products[existProductIndex].createdAt = undefined;
-      setJSON(db.products);
+    deleteProduct: async (parent, { id }) => {
+      const productRef = doc(db, "products", id);
+      if (!productRef) throw new Error("없는 데이터입니다");
+      await updateDoc(productRef, { createdAt: null });
       return id;
     },
   },
