@@ -31,7 +31,10 @@ const productResolver: Resolvers = {
     ) => {
       const products = collection(db, "products");
       const queryOptions: any[] = [orderBy("createdAt", "desc")];
-      if (cursor) queryOptions.push(startAfter(cursor));
+      if (cursor) {
+        const snapshot = await getDoc(doc(db, "products", cursor));
+        queryOptions.push(startAfter(snapshot));
+      }
       if (!showDeleted) queryOptions.unshift(where("createdAt", "!=", null));
       const q = query(products, ...queryOptions, limit(PAGE_SIZE));
       const snapshot = await getDocs(q);
@@ -78,7 +81,10 @@ const productResolver: Resolvers = {
       const productRef = doc(db, "products", id);
 
       if (!productRef) throw new Error("없는 데이터입니다");
-      await updateDoc(productRef, data);
+      await updateDoc(productRef, {
+        ...data,
+        createdAt: serverTimestamp(),
+      });
       const snap = await getDoc(productRef);
 
       return {
