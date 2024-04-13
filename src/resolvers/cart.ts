@@ -36,18 +36,18 @@ const cartResolver: Resolvers = {
   },
 
   Mutation: {
-    addCart: async (parent, { id }, info) => {
-      if (!id) throw Error("상품 id가 없습니다");
-      const productRef = doc(db, "products", id);
+    addCart: async (parent, { productId }, info) => {
+      if (!productId) throw Error("상품 id가 없습니다");
+      const productRef = doc(db, "products", productId);
       const cartCollection = collection(db, "cart");
-      const exist = (
-        await getDocs(query(cartCollection, where("product", "==", productRef)))
-      ).docs[0];
-      //query 날리기 위해서 Docs로 함
+      const exist = await getDocs(
+        query(cartCollection, where("product", "==", productRef))
+      );
+      const existDocs = exist.docs;
 
       let cartRef;
-      if (exist) {
-        cartRef = doc(db, "cart", exist.id);
+      if (existDocs.length > 0) {
+        cartRef = doc(db, "cart", existDocs[0].id);
         await updateDoc(cartRef, {
           amount: increment(1),
         });
@@ -67,18 +67,11 @@ const cartResolver: Resolvers = {
       };
     },
 
-    updateCart: async (parent, { id, amount }, info) => {
+    updateCart: async (parent, { cartId, amount }, info) => {
       if (amount < 1) throw Error("1 이하로 바꿀 수 없습니다");
-      if (!id) throw Error("상품 id가 없습니다");
-      const productRef = doc(db, "products", id);
-      const cartCollection = collection(db, "cart");
-      const exist = (
-        await getDocs(query(cartCollection, where("product", "==", productRef)))
-      ).docs[0];
-      //query 날리기 위해서 Docs로 함
-      if (!exist) throw Error("등록된 장바구니가 없습니다");
+      const cartRef = doc(db, "cart", cartId);
+      if (!cartRef) throw Error("장바구니 정보가 없습니다");
 
-      const cartRef = doc(db, "cart", exist.id);
       await updateDoc(cartRef, {
         amount,
       });
@@ -86,15 +79,14 @@ const cartResolver: Resolvers = {
       const snapshot = await getDoc(cartRef);
       return {
         ...snapshot.data(),
-        product: productRef,
         id: snapshot.id,
       };
     },
-    deleteCart: async (parent, { id }, info) => {
-      const cartRef = doc(db, "cart", id);
+    deleteCart: async (parent, { cartId }, info) => {
+      const cartRef = doc(db, "cart", cartId);
       if (!cartRef) throw new Error("없는 데이터입니다");
       await deleteDoc(cartRef);
-      return id;
+      return cartId;
     },
     deleteAllCart: async (parent, args, info) => {
       const cart = collection(db, "cart");
