@@ -1,7 +1,6 @@
-import { DBField, writeDB } from "../dbController";
 import { db } from "../../firebase";
-import { Products, Resolvers } from "./types";
-import { v4 as uuid } from "uuid";
+import { Resolvers } from "./types";
+
 import {
   collection,
   getDoc,
@@ -18,8 +17,6 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-
-const setJSON = (data: Products) => writeDB(DBField.PRODUCTS, data);
 
 const PAGE_SIZE = 15;
 

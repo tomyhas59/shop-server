@@ -1,8 +1,9 @@
 import { gql } from "apollo-server-express";
 import productSchema from "./product";
 import cartSchema from "./cart";
+import signUpSchema from "./signUp";
 
-const linckSchema = gql`
+const linkSchema = gql`
   type Query {
     _: Boolean #임시 쿼리
   }
@@ -11,4 +12,4 @@ const linckSchema = gql`
   }
 `;
 
-export default [linckSchema, productSchema, cartSchema];
+export default [linkSchema, productSchema, cartSchema, signUpSchema];
