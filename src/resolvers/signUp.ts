@@ -29,10 +29,21 @@ const signUpResolver: Resolvers = {
 
   Mutation: {
     signUp: async (parent, { email, password, nickname }) => {
-      const userSnapshot = await getDoc(doc(db, "users", email));
+      const userCollection = collection(db, "users");
+      const existEmail = await getDocs(
+        query(userCollection, where("email", "==", email))
+      );
 
-      if (userSnapshot.exists === email) {
+      if (existEmail.docs.length > 0) {
         throw new Error("중복된 이메일입니다");
+      }
+
+      const existNickname = await getDocs(
+        query(userCollection, where("nickname", "==", nickname))
+      );
+
+      if (existNickname.docs.length > 0) {
+        throw new Error("중복된 닉네임입니다");
       }
 
       const newUser = {

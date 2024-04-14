@@ -18,8 +18,10 @@ import { Product, Resolvers } from "./types";
 const cartResolver: Resolvers = {
   Query: {
     cart: async (parent, args) => {
-      const cart = collection(db, "cart");
-      const cartSnap = await getDocs(cart);
+      const cartCollection = collection(db, "cart");
+
+      const cartSnap = await getDocs(cartCollection);
+
       const data: DocumentData[] = [];
       cartSnap.forEach((doc) => {
         const d = doc.data();
@@ -35,7 +37,7 @@ const cartResolver: Resolvers = {
 
   Mutation: {
     addCart: async (parent, { productId }, info) => {
-      if (!productId) throw Error("상품 id가 없습니다");
+      if (!productId) throw new Error("상품 id가 없습니다");
       const productRef = doc(db, "products", productId);
       const cartCollection = collection(db, "cart");
       const exist = await getDocs(
@@ -66,15 +68,17 @@ const cartResolver: Resolvers = {
     },
 
     updateCart: async (parent, { cartId, amount }, info) => {
-      if (amount < 1) throw Error("1 이하로 바꿀 수 없습니다");
+      if (amount < 1) throw new Error("1 이하로 바꿀 수 없습니다");
       const cartRef = doc(db, "cart", cartId);
-      if (!cartRef) throw Error("장바구니 정보가 없습니다");
+
+      if (!cartRef) throw new Error("장바구니 정보가 없습니다");
 
       await updateDoc(cartRef, {
         amount,
       });
 
       const snapshot = await getDoc(cartRef);
+
       return {
         ...snapshot.data(),
         id: snapshot.id,
@@ -87,8 +91,8 @@ const cartResolver: Resolvers = {
       return cartId;
     },
     deleteAllCart: async (parent, args, info) => {
-      const cart = collection(db, "cart");
-      const cartSnap = await getDocs(cart);
+      const cartCollection = collection(db, "cart");
+      const cartSnap = await getDocs(cartCollection);
       cartSnap.forEach(async (doc) => await deleteDoc(doc.ref));
 
       return "모든 장바구니 데이터가 성공적으로 삭제되었습니다.";
@@ -101,7 +105,7 @@ const cartResolver: Resolvers = {
         const cartSnapshot = await getDoc(cartRef);
         const cartData = cartSnapshot.data();
         const productRef = cartData?.product;
-        if (!productRef) throw Error("상품 정보가 없습니다");
+        if (!productRef) throw new Error("상품 정보가 없습니다");
         const product = (await getDoc(productRef)).data() as Product;
         if (product.createdAt) {
           await deleteDoc(cartRef);
