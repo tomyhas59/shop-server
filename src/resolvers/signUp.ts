@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import admin from "firebase-admin";
 import {
@@ -16,6 +17,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase";
+import { FirebaseError } from "firebase/app";
 
 const signUpResolver: Resolvers = {
   Query: {
@@ -46,6 +48,19 @@ const signUpResolver: Resolvers = {
         throw new Error("중복된 닉네임입니다");
       }
 
+      const auth = getAuth();
+      // Create a new user in Firebase Authentication
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      await updateProfile(userCredential.user, {
+        displayName: nickname,
+      });
+
+      // Save user data to Firestore
       const newUser = {
         email,
         password,
@@ -62,7 +77,10 @@ const signUpResolver: Resolvers = {
 
     signIn: async (_, { email, password }) => {
       try {
-        // Sign in user with Firebase Authentication
+        if (!email) {
+          throw new Error("이메일을 입력해주세요.");
+        }
+
         const auth = getAuth();
         const userCredential = await signInWithEmailAndPassword(
           auth,
@@ -71,14 +89,21 @@ const signUpResolver: Resolvers = {
         );
         const user = userCredential.user;
 
-        // Return user data upon successful sign in
         return {
           uid: user.uid,
           email: user.email,
         };
       } catch (error) {
         console.error("Error signing in:", error);
-        throw new Error("Failed to sign in");
+
+        if (
+          error instanceof FirebaseError &&
+          error.code === "auth/user-not-found"
+        ) {
+          throw new Error("가입되지 않은 이메일입니다.");
+        } else {
+          throw new Error("Failed to sign in");
+        }
       }
     },
 
