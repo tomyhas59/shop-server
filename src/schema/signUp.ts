@@ -13,7 +13,7 @@ const signUpSchema = gql`
     nickname: String
   }
 
-  type LogIn {
+  type SignIn {
     uid: ID!
     email: String!
   }
@@ -23,8 +23,8 @@ const signUpSchema = gql`
 
   extend type Mutation {
     signUp(email: String, password: String, nickname: String): SignUp
-    signIn(email: String!, password: String!): LogIn!
-    signOut(uid: ID!): Boolean
+    signIn(email: String!, password: String!): SignIn!
+    signOut: Boolean
   }
 `;
 
