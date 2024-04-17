@@ -49,7 +49,7 @@ const signUpResolver: Resolvers = {
       }
 
       const auth = getAuth();
-      // Create a new user in Firebase Authentication
+
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -60,7 +60,6 @@ const signUpResolver: Resolvers = {
         displayName: nickname,
       });
 
-      // Save user data to Firestore
       const newUser = {
         email,
         password,
@@ -94,30 +93,25 @@ const signUpResolver: Resolvers = {
           email: user.email,
         };
       } catch (error) {
-        console.error("Error signing in:", error);
-
         if (
           error instanceof FirebaseError &&
           error.code === "auth/user-not-found"
         ) {
           throw new Error("가입되지 않은 이메일입니다.");
         } else {
-          throw new Error("Failed to sign in");
+          throw new Error("로그인 실패");
         }
       }
     },
 
     signOut: async () => {
       try {
-        // Sign out user with Firebase Authentication
         const auth = getAuth();
         await signOut(auth);
-
-        // Return true upon successful sign out
         return true;
       } catch (error) {
-        console.error("Error signing out:", error);
-        throw new Error("Failed to sign out");
+        console.error("로그아웃 실패");
+        throw new Error("로그아웃 실패");
       }
     },
   },
