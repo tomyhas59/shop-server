@@ -6,7 +6,6 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import admin from "firebase-admin";
 import {
   addDoc,
   collection,

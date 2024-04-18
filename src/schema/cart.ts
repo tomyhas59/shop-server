@@ -9,15 +9,15 @@ const cartSchema = gql`
 
   #GraphQL 스키마에서 Query 타입을 확장하여 새로운 필드를 추가
   extend type Query {
-    cart: [CartItem!]
+    cart(uid: ID!): [CartItem!]
   }
 
   extend type Mutation {
-    addCart(productId: ID!): CartItem!
+    addCart(uid: ID!, productId: ID!): CartItem!
     updateCart(cartId: ID!, amount: Int!): CartItem!
     deleteCart(cartId: ID!): ID!
     deleteAllCart: ID!
-    executePay(ids: [ID!]): [ID!]
+    executePay(uid: ID!, ids: [ID!]): [ID!]
   }
 `;
 
