@@ -9,14 +9,12 @@ import {
 import {
   addDoc,
   collection,
-  doc,
   getDoc,
   getDocs,
   query,
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { FirebaseError } from "firebase/app";
 
 const signUpResolver: Resolvers = {
   Query: {
@@ -59,6 +57,7 @@ const signUpResolver: Resolvers = {
         displayName: nickname,
       });
 
+      console.log(userCredential.user);
       const newUser = {
         email,
         password,
@@ -91,15 +90,8 @@ const signUpResolver: Resolvers = {
           uid: user.uid,
           email: user.email,
         };
-      } catch (error) {
-        if (
-          error instanceof FirebaseError &&
-          error.code === "auth/user-not-found"
-        ) {
-          throw new Error("가입되지 않은 이메일입니다.");
-        } else {
-          throw new Error("로그인 실패");
-        }
+      } catch (error: any) {
+        throw new Error("이메일 또는 비밀번호가 다릅니다.");
       }
     },
 
