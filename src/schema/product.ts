@@ -13,6 +13,7 @@ const productSchema = gql`
   extend type Query {
     products(cursor: ID!, showDeleted: Boolean): [Product!] #-->프론트 graphql 넘겨주기
     product(id: ID!): Product!
+    allProducts: [Product]
   }
 
   extend type Mutation {

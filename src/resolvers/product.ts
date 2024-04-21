@@ -52,6 +52,18 @@ const productResolver: Resolvers = {
         id: snapshot.id,
       };
     },
+    allProducts: async () => {
+      const products = collection(db, "products");
+      const snapshot = await getDocs(products);
+      const data: DocumentData[] = [];
+      snapshot.forEach((doc) => {
+        data.push({
+          id: doc.id,
+          ...doc.data(),
+        });
+      });
+      return data;
+    },
   },
 
   Mutation: {
