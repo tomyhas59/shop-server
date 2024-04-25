@@ -5,6 +5,8 @@ import resolvers from "./resolvers";
 import { DBField, readDB } from "./dbController";
 
 (async () => {
+  const isProduction = process.env.NODE_ENV === "production";
+
   const server = new ApolloServer({
     typeDefs: schema,
     resolvers,
@@ -16,7 +18,9 @@ import { DBField, readDB } from "./dbController";
     app,
     path: "/graphql",
     cors: {
-      origin: ["https://tmshop.vercel.app", "https://studio.apollographql.com"], //프론트 url
+      origin: isProduction
+        ? ["https://tmshop.vercel.app", "https://studio.apollographql.com"]
+        : ["http://localhost:3000", "https://studio.apollographql.com"], //프론트 url
       credentials: true,
     },
   });
