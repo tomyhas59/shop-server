@@ -16,7 +16,7 @@ import { DBField, readDB } from "./dbController";
     app,
     path: "/graphql",
     cors: {
-      origin: ["https://tmshop.vercel.app", "https://studio.apollographql.com"],
+      origin: ["https://tmshop.vercel.app", "https://studio.apollographql.com"], //프론트 url
       credentials: true,
     },
   });
