@@ -27,5 +27,8 @@ import { DBField, readDB } from "./dbController";
   await app.listen(isProduction ? { port: 7000 } : { port: 8000 });
 
   readDB(DBField.PRODUCTS);
-  console.log("server 실행 중");
+
+  console.log(
+    isProduction ? "production server 실행 중" : "dev server 실행 중"
+  );
 })();
