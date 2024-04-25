@@ -16,7 +16,10 @@ import { DBField, readDB } from "./dbController";
     app,
     path: "/graphql",
     cors: {
-      origin: ["http://localhost:3000", "https://studio.apollographql.com"],
+      origin: [
+        "https://shop-ashy-three.vercel.app",
+        "https://studio.apollographql.com",
+      ],
       credentials: true,
     },
   });
