@@ -28,5 +28,5 @@ import { DBField, readDB } from "./dbController";
   await app.listen({ port: port });
 
   readDB(DBField.PRODUCTS);
-  console.log("server 실행 중");
+  console.log("server 실행 중", port);
 })();
