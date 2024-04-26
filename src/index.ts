@@ -6,7 +6,6 @@ import { DBField, readDB } from "./dbController";
 
 (async () => {
   const isProduction = process.env.NODE_ENV === "production";
-  const port = isProduction ? 7000 : 8000;
 
   const server = new ApolloServer({
     typeDefs: schema,
@@ -21,18 +20,15 @@ import { DBField, readDB } from "./dbController";
     cors: {
       origin: isProduction
         ? ["https://tmshop.vercel.app", "https://studio.apollographql.com"]
-        : ["http://localhost:3000", "https://studio.apollographql.com"],
+        : ["http://localhost:3000", "https://studio.apollographql.com"], //프론트 url
       credentials: true,
     },
   });
-
-  await app.listen({ port });
+  await app.listen(isProduction ? { port: 7000 } : { port: 8000 });
 
   readDB(DBField.PRODUCTS);
 
   console.log(
-    isProduction
-      ? "Production server is running."
-      : "Development server is running."
+    isProduction ? "production server 실행 중" : "dev server 실행 중"
   );
 })();
