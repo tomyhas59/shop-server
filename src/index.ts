@@ -2,7 +2,6 @@ import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import schema from "./schema";
 import resolvers from "./resolvers";
-import { DBField, readDB } from "./dbController";
 
 (async () => {
   const isProduction = process.env.NODE_ENV === "production";
@@ -24,9 +23,8 @@ import { DBField, readDB } from "./dbController";
       credentials: true,
     },
   });
-  const port = isProduction ? 7000 : 8000;
+  const port = isProduction ? 8000 : 7000;
   await app.listen({ port: port });
 
-  readDB(DBField.PRODUCTS);
   console.log("server 실행 중", port);
 })();
