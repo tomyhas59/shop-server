@@ -1,7 +1,7 @@
 {
   "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ESNext",
     "lib": ["ESNext"],
     "allowJs": false,
     "skipLibCheck": true,
@@ -12,8 +12,7 @@
     "module": "commonjs",
     "moduleResolution": "Node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true
+    "isolatedModules": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
