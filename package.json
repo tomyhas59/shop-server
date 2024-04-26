@@ -5,6 +5,9 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/node": "^7.23.9",
+    "@babel/preset-env": "^7.24.4",
     "@tsconfig/node16": "^16.1.1",
     "@types/graphql": "^14.5.0",
     "@types/node": "^20.11.28",
@@ -26,6 +29,6 @@
   "scripts": {
     "dev": "nodemon --exec ts-node ./src/index.ts",
     "build": "tsc",
-    "start": "NODE_ENV=production node ./src/index.js"
+    "start": "NODE_ENV=production babel-node src/index.js"
   }
 }

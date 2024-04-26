@@ -1,8 +1,8 @@
-const express = require("express");
-const { ApolloServer } = require("apollo-server-express");
-const schema = require("./schema");
-const resolvers = require("./resolvers");
-const cors = require("cors");
+import express from "express";
+import { ApolloServer } from "apollo-server-express";
+import schema from "./schema";
+import resolvers from "./resolvers";
+import cors from "cors";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -11,7 +11,7 @@ const server = new ApolloServer({
   resolvers,
 });
 
-const app = express();
+const app: any = express();
 
 // Enable CORS middleware
 app.use(
