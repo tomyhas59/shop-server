@@ -64,7 +64,7 @@ const cartResolver: Resolvers = {
 
       const result = await addDoc(cartCollection, newCart);
       const cartSnapshot = await getDoc(result);
-
+      console.log(cartSnapshot.data());
       return {
         ...cartSnapshot.data(),
         product: productRef,
