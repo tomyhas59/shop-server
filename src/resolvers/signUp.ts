@@ -17,15 +17,6 @@ import {
 import { db } from "../../firebase";
 
 const signUpResolver: Resolvers = {
-  Query: {
-    user: (parent, { email, id }) => {
-      // Retrieve user logic
-      // Here, you would implement logic to retrieve user data based on the provided email or id
-      // For this example, we'll simply return the provided id
-      return id;
-    },
-  },
-
   Mutation: {
     signUp: async (parent, { email, password, nickname }) => {
       const userCollection = collection(db, "users");

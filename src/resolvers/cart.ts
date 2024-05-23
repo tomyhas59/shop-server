@@ -6,16 +6,12 @@ import {
   doc,
   getDoc,
   getDocs,
-  increment,
   query,
   updateDoc,
   where,
 } from "firebase/firestore";
-import { DBField, writeDB } from "../dbController";
 import { db } from "../../firebase";
 import { Cart, Product, Resolvers } from "./types";
-
-const setJSON = (data: Cart) => writeDB(DBField.CART, data);
 
 const cartResolver: Resolvers = {
   Query: {

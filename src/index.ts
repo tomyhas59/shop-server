@@ -13,7 +13,6 @@ const server = new ApolloServer({
 
 const app: any = express();
 
-// Enable CORS middleware
 app.use(
   cors({
     origin: isProduction
