@@ -4,14 +4,6 @@ const auth_1 = require("firebase/auth");
 const firestore_1 = require("firebase/firestore");
 const firebase_1 = require("../../firebase");
 const signUpResolver = {
-    Query: {
-        user: (parent, { email, id }) => {
-            // Retrieve user logic
-            // Here, you would implement logic to retrieve user data based on the provided email or id
-            // For this example, we'll simply return the provided id
-            return id;
-        },
-    },
     Mutation: {
         signUp: async (parent, { email, password, nickname }) => {
             const userCollection = (0, firestore_1.collection)(firebase_1.db, "users");

@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const firestore_1 = require("firebase/firestore");
-const dbController_1 = require("../dbController");
 const firebase_1 = require("../../firebase");
-const setJSON = (data) => (0, dbController_1.writeDB)(dbController_1.DBField.CART, data);
 const cartResolver = {
     Query: {
         cart: async (parent, { uid }) => {
@@ -43,6 +41,7 @@ const cartResolver = {
             }
             const result = await (0, firestore_1.addDoc)(cartCollection, newCart);
             const cartSnapshot = await (0, firestore_1.getDoc)(result);
+            console.log(cartSnapshot.data());
             return {
                 ...cartSnapshot.data(),
                 product: productRef,
