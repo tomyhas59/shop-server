@@ -11,7 +11,7 @@ const reviewSchema = gql`
   }
 
   extend type Query {
-    reviews(productId: ID!): [Review!]
+    reviews(productId: ID!): [Review]
   }
 
   extend type Mutation {
