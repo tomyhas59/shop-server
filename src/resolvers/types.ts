@@ -7,6 +7,7 @@ export type Resolvers = {
         db: {
           cart: Cart;
           products: Products;
+          reviews: Reviews;
         };
       },
       info: any
@@ -36,4 +37,13 @@ export type User = {
   id: string;
   email: string;
   nickname: string;
+};
+
+export type Reviews = {
+  id: string;
+  productId: string;
+  userId: string;
+  content: string;
+  rating: number;
+  createdAt: string;
 };

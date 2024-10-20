@@ -90,8 +90,8 @@ const cartResolver: Resolvers = {
       return cartId;
     },
     deleteAllCart: async (parent, args, info) => {
-      const cart = collection(db, "cart");
-      const cartSnap = await getDocs(cart);
+      const cartCollection = collection(db, "cart");
+      const cartSnap = await getDocs(cartCollection);
       cartSnap.forEach(async (doc) => await deleteDoc(doc.ref));
 
       return "모든 장바구니 데이터가 성공적으로 삭제되었습니다.";

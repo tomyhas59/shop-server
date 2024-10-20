@@ -15,7 +15,6 @@ import {
   serverTimestamp,
   addDoc,
   updateDoc,
-  deleteDoc,
 } from "firebase/firestore";
 
 const PAGE_SIZE = 15;
@@ -26,14 +25,14 @@ const productResolver: Resolvers = {
       parent,
       /**args */ { cursor = "", showDeleted = false }
     ) => {
-      const products = collection(db, "products");
+      const productsCollection = collection(db, "products");
       const queryOptions: any[] = [orderBy("createdAt", "desc")];
       if (cursor) {
         const snapshot = await getDoc(doc(db, "products", cursor));
         queryOptions.push(startAfter(snapshot));
       }
       if (!showDeleted) queryOptions.unshift(where("createdAt", "!=", null));
-      const q = query(products, ...queryOptions, limit(PAGE_SIZE));
+      const q = query(productsCollection, ...queryOptions, limit(PAGE_SIZE));
       const snapshot = await getDocs(q);
       const data: DocumentData[] = [];
       snapshot.forEach((doc) => {
@@ -42,7 +41,6 @@ const productResolver: Resolvers = {
           ...doc.data(),
         });
       });
-      console.log(data);
       return data;
     },
     product: async (parent, { id }) => {
@@ -94,11 +92,11 @@ const productResolver: Resolvers = {
         ...data,
         createdAt: serverTimestamp(),
       });
-      const snap = await getDoc(productRef);
+      const snapshot = await getDoc(productRef);
 
       return {
-        ...snap.data(),
-        id: snap.id,
+        ...snapshot.data(),
+        id: snapshot.id,
       };
     },
     deleteProduct: async (parent, { id }) => {
