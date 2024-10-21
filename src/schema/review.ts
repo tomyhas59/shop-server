@@ -4,7 +4,6 @@ const reviewSchema = gql`
   type Review {
     id: ID!
     productId: ID!
-    userId: String!
     content: String!
     rating: Int!
     createdAt: String!
@@ -15,14 +14,15 @@ const reviewSchema = gql`
   }
 
   extend type Mutation {
-    addReview(productId: ID!, content: String!, rating: Int!): Review!
+    addReview(productId: ID!, content: String!, rating: Int!, uid: ID!): Review!
     updateReview(
       id: ID!
       productId: ID!
+      uid: ID!
       content: String!
       rating: Int!
     ): Review
-    deleteReview(id: ID!): ID!
+    deleteReview(id: ID!, uid: ID!): ID!
   }
 `;
 

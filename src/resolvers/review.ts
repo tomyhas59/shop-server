@@ -35,12 +35,15 @@ const reviewResolver: Resolvers = {
     },
   },
   Mutation: {
-    addReview: async (parent, { productId, content, rating, userId }) => {
+    addReview: async (parent, { productId, content, rating, uid }) => {
+      if (!productId) throw Error("상품 id가 없습니다");
+      const productRef = doc(db, "products", productId);
+
       const newReview = {
-        productId,
-        userId,
-        content,
-        rating,
+        product: productRef,
+        uid: uid,
+        content: content,
+        rating: rating,
         createdAt: serverTimestamp(),
       };
 
