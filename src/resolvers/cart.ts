@@ -11,7 +11,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { Cart, Product, Resolvers } from "./types";
+import { Resolvers } from "./types";
 
 const cartResolver: Resolvers = {
   Query: {
@@ -45,6 +45,7 @@ const cartResolver: Resolvers = {
         amount: 1,
       };
 
+      //이미 카트에 존재하는지 체크
       const cartCollection = collection(db, "cart");
       const userCartQuery = query(cartCollection, where("uid", "==", uid));
       const userCartSnapshot = await getDocs(userCartQuery);
@@ -60,7 +61,7 @@ const cartResolver: Resolvers = {
 
       const result = await addDoc(cartCollection, newCart);
       const cartSnapshot = await getDoc(result);
-      console.log(cartSnapshot.data());
+
       return {
         ...cartSnapshot.data(),
         product: productRef,

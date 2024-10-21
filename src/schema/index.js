@@ -7,6 +7,7 @@ const apollo_server_express_1 = require("apollo-server-express");
 const product_1 = __importDefault(require("./product"));
 const cart_1 = __importDefault(require("./cart"));
 const signUp_1 = __importDefault(require("./signUp"));
+const review_1 = __importDefault(require("./review"));
 const linkSchema = (0, apollo_server_express_1.gql) `
   type Query {
     _: Boolean #임시 쿼리
@@ -15,4 +16,10 @@ const linkSchema = (0, apollo_server_express_1.gql) `
     _: Boolean
   }
 `;
-exports.default = [linkSchema, product_1.default, cart_1.default, signUp_1.default];
+exports.default = [
+    linkSchema,
+    product_1.default,
+    cart_1.default,
+    signUp_1.default,
+    review_1.default,
+];

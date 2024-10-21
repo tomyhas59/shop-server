@@ -7,7 +7,7 @@ const productResolver = {
     Query: {
         products: async (parent, 
         /**args */ { cursor = "", showDeleted = false }) => {
-            const products = (0, firestore_1.collection)(firebase_1.db, "products");
+            const productsCollection = (0, firestore_1.collection)(firebase_1.db, "products");
             const queryOptions = [(0, firestore_1.orderBy)("createdAt", "desc")];
             if (cursor) {
                 const snapshot = await (0, firestore_1.getDoc)((0, firestore_1.doc)(firebase_1.db, "products", cursor));
@@ -15,7 +15,7 @@ const productResolver = {
             }
             if (!showDeleted)
                 queryOptions.unshift((0, firestore_1.where)("createdAt", "!=", null));
-            const q = (0, firestore_1.query)(products, ...queryOptions, (0, firestore_1.limit)(PAGE_SIZE));
+            const q = (0, firestore_1.query)(productsCollection, ...queryOptions, (0, firestore_1.limit)(PAGE_SIZE));
             const snapshot = await (0, firestore_1.getDocs)(q);
             const data = [];
             snapshot.forEach((doc) => {
@@ -24,7 +24,6 @@ const productResolver = {
                     ...doc.data(),
                 });
             });
-            console.log(data);
             return data;
         },
         product: async (parent, { id }) => {
@@ -71,10 +70,10 @@ const productResolver = {
                 ...data,
                 createdAt: (0, firestore_1.serverTimestamp)(),
             });
-            const snap = await (0, firestore_1.getDoc)(productRef);
+            const snapshot = await (0, firestore_1.getDoc)(productRef);
             return {
-                ...snap.data(),
-                id: snap.id,
+                ...snapshot.data(),
+                id: snapshot.id,
             };
         },
         deleteProduct: async (parent, { id }) => {

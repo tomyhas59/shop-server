@@ -42,7 +42,7 @@ export type User = {
 export type Reviews = {
   id: string;
   productId: string;
-  userId: string;
+  uid: string;
   content: string;
   rating: number;
   createdAt: string;

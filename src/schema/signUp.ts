@@ -5,6 +5,17 @@ const signUpSchema = gql`
     uid: ID!
     email: String!
     nickname: String!
+    reviews: [Review]!
+  }
+
+  type Review {
+    id: ID!
+    productId: ID!
+    content: String!
+    rating: Int!
+    userId: String!
+    createdAt: String!
+    user: User!
   }
 
   type SignUp {

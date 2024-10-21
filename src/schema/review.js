@@ -1,14 +1,13 @@
-import { gql } from "apollo-server-express";
-
-const reviewSchema = gql`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const apollo_server_express_1 = require("apollo-server-express");
+const reviewSchema = (0, apollo_server_express_1.gql) `
   type Review {
     id: ID!
     productId: ID!
     content: String!
     rating: Int!
-    userId: String!
     createdAt: String!
-    user: User!
   }
 
   extend type Query {
@@ -27,5 +26,4 @@ const reviewSchema = gql`
     deleteReview(id: ID!, uid: ID!): ID!
   }
 `;
-
-export default reviewSchema;
+exports.default = reviewSchema;

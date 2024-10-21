@@ -41,7 +41,6 @@ const cartResolver = {
             }
             const result = await (0, firestore_1.addDoc)(cartCollection, newCart);
             const cartSnapshot = await (0, firestore_1.getDoc)(result);
-            console.log(cartSnapshot.data());
             return {
                 ...cartSnapshot.data(),
                 product: productRef,
@@ -71,8 +70,8 @@ const cartResolver = {
             return cartId;
         },
         deleteAllCart: async (parent, args, info) => {
-            const cart = (0, firestore_1.collection)(firebase_1.db, "cart");
-            const cartSnap = await (0, firestore_1.getDocs)(cart);
+            const cartCollection = (0, firestore_1.collection)(firebase_1.db, "cart");
+            const cartSnap = await (0, firestore_1.getDocs)(cartCollection);
             cartSnap.forEach(async (doc) => await (0, firestore_1.deleteDoc)(doc.ref));
             return "모든 장바구니 데이터가 성공적으로 삭제되었습니다.";
         },
