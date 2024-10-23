@@ -4,10 +4,11 @@ const apollo_server_express_1 = require("apollo-server-express");
 const reviewSchema = (0, apollo_server_express_1.gql) `
   type Review {
     id: ID!
-    productId: ID!
     content: String!
     rating: Int!
     createdAt: String!
+    uid: ID!
+    user: User!
   }
 
   extend type Query {
@@ -19,11 +20,10 @@ const reviewSchema = (0, apollo_server_express_1.gql) `
     updateReview(
       id: ID!
       productId: ID!
-      uid: ID!
       content: String!
       rating: Int!
     ): Review
-    deleteReview(id: ID!, uid: ID!): ID!
+    deleteReview(reviewId: ID!): ID!
   }
 `;
 exports.default = reviewSchema;

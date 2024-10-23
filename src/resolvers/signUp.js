@@ -20,11 +20,12 @@ const signUpResolver = {
             await (0, auth_1.updateProfile)(userCredential.user, {
                 displayName: nickname,
             });
-            console.log(userCredential.user);
+            console.log(userCredential.user.uid);
             const newUser = {
                 email,
                 password,
                 nickname,
+                uid: userCredential.user.uid,
             };
             const result = await (0, firestore_1.addDoc)((0, firestore_1.collection)(firebase_1.db, "users"), newUser);
             const snapshot = await (0, firestore_1.getDoc)(result);

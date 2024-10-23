@@ -48,11 +48,12 @@ const signUpResolver: Resolvers = {
         displayName: nickname,
       });
 
-      console.log(userCredential.user);
+      console.log(userCredential.user.uid);
       const newUser = {
         email,
         password,
         nickname,
+        uid: userCredential.user.uid,
       };
 
       const result = await addDoc(collection(db, "users"), newUser);

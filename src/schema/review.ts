@@ -6,28 +6,23 @@ const reviewSchema = gql`
     content: String!
     rating: Int!
     createdAt: String!
-    user: User
+    uid: ID!
+    user: User!
   }
 
   extend type Query {
-    reviews(productId: ID!, userId: ID!): [Review]
+    reviews(productId: ID!): [Review]
   }
 
   extend type Mutation {
-    addReview(
-      productId: ID!
-      content: String!
-      rating: Int!
-      userId: ID!
-    ): Review!
+    addReview(productId: ID!, content: String!, rating: Int!, uid: ID!): Review!
     updateReview(
       id: ID!
       productId: ID!
       content: String!
       rating: Int!
-      user: User
     ): Review
-    deleteReview(id: ID!, userId: ID!): ID!
+    deleteReview(reviewId: ID!): ID!
   }
 `;
 

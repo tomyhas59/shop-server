@@ -29,6 +29,7 @@ const cartResolver = {
                 product: productRef,
                 amount: 1,
             };
+            //이미 카트에 존재하는지 체크
             const cartCollection = (0, firestore_1.collection)(firebase_1.db, "cart");
             const userCartQuery = (0, firestore_1.query)(cartCollection, (0, firestore_1.where)("uid", "==", uid));
             const userCartSnapshot = await (0, firestore_1.getDocs)(userCartQuery);
