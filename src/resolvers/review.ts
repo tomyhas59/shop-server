@@ -3,7 +3,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
   getDoc,
   getDocs,
   query,
@@ -30,7 +29,7 @@ const reviewResolver: Resolvers = {
 
         const reviewPromises = reviewSnapshot.docs.map(async (doc) => {
           const d = doc.data();
-          console.log(d);
+
           return {
             id: doc.id,
             ...d,
@@ -42,7 +41,15 @@ const reviewResolver: Resolvers = {
         // 모든 리뷰 데이터가 준비될 때까지 기다립니다.
         const reviewsData = await Promise.all(reviewPromises);
 
-        return reviewsData;
+        const sortedReviews = reviewsData
+          .filter((review) => review.createdAt !== null)
+          .sort((a, b) => {
+            return b.createdAt!.getTime() - a.createdAt!.getTime(); // 최신순
+          });
+
+        console.log("------------", sortedReviews);
+
+        return sortedReviews;
       } catch (error) {
         console.error("리뷰 데이터를 가져오는 중 오류 발생:", error);
         throw new Error("리뷰 데이터를 가져오는 중 문제가 발생했습니다.");
