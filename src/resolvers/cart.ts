@@ -11,18 +11,35 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { Resolvers } from "./types";
+import { CartItem, Resolvers } from "./types";
 
 const cartResolver: Resolvers = {
   Query: {
     cart: async (parent, { uid }) => {
       const cartCollection = collection(db, "cart");
-      const userCartQuery = query(cartCollection, where("uid", "==", uid));
+      const CartQuery = query(cartCollection, where("uid", "==", uid));
 
-      const userCartSnapshot = await getDocs(userCartQuery);
+      const CartSnapshot = await getDocs(CartQuery);
       const data: DocumentData[] = [];
 
-      userCartSnapshot.forEach((doc) => {
+      CartSnapshot.forEach((doc) => {
+        const d = doc.data();
+        data.push({
+          id: doc.id,
+          ...d,
+        });
+      });
+
+      return data;
+    },
+    orders: async (parent, { uid }) => {
+      const ordersCollection = collection(db, "orders");
+      const OrdersQuery = query(ordersCollection, where("uid", "==", uid));
+
+      const ordersSnapshot = await getDocs(OrdersQuery);
+      const data: DocumentData[] = [];
+
+      ordersSnapshot.forEach((doc) => {
         const d = doc.data();
         data.push({
           id: doc.id,
@@ -99,22 +116,56 @@ const cartResolver: Resolvers = {
     },
 
     executePay: async (parent, { uid, ids }, info) => {
-      const deleted: any = [];
+      const deleted: string[] = [];
+      const orderItems: CartItem[] = [];
 
       const cartCollection = collection(db, "cart");
       const userCartQuery = query(cartCollection, where("uid", "==", uid));
       const cartSnapshot = await getDocs(userCartQuery);
 
+      // 주문 내역에 추가할 데이터 수집
       cartSnapshot.forEach((cartDoc) => {
         if (ids.includes(cartDoc.id)) {
-          deleteDoc(doc(db, "cart", cartDoc.id));
+          const cartData = cartDoc.data() as CartItem;
+          orderItems.push({
+            id: cartDoc.id,
+            amount: cartData.amount,
+            product: cartData.product,
+          });
           deleted.push(cartDoc.id);
         }
       });
 
+      // 새로운 주문 내역 컬렉션에 추가
+      const ordersCollection = collection(db, "orders");
+      const orderPromises = orderItems.map((item) =>
+        addDoc(ordersCollection, { uid, ...item, createdAt: new Date() })
+      );
+      await Promise.all(orderPromises);
+
+      // 카트에서 삭제
+      const deletePromises = deleted.map((id) =>
+        deleteDoc(doc(db, "cart", id))
+      );
+      await Promise.all(deletePromises);
+
       return deleted;
     },
+    deleteOrders: async (parent, { ordersId }, info) => {
+      const ordersRef = doc(db, "cart", ordersId);
+      if (!ordersRef) throw new Error("없는 데이터입니다");
+      await deleteDoc(ordersRef);
+      return ordersId;
+    },
+    deleteAllOrders: async (parent, args, info) => {
+      const ordersCollection = collection(db, "orders");
+      const orderSnap = await getDocs(ordersCollection);
+      orderSnap.forEach(async (doc) => await deleteDoc(doc.ref));
+
+      return "모든 주문 내역이 성공적으로 삭제되었습니다.";
+    },
   },
+
   CartItem: {
     product: async (cartItem, args, context) => {
       const product = await getDoc(cartItem.product);

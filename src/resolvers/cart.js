@@ -6,10 +6,24 @@ const cartResolver = {
     Query: {
         cart: async (parent, { uid }) => {
             const cartCollection = (0, firestore_1.collection)(firebase_1.db, "cart");
-            const userCartQuery = (0, firestore_1.query)(cartCollection, (0, firestore_1.where)("uid", "==", uid));
-            const userCartSnapshot = await (0, firestore_1.getDocs)(userCartQuery);
+            const CartQuery = (0, firestore_1.query)(cartCollection, (0, firestore_1.where)("uid", "==", uid));
+            const CartSnapshot = await (0, firestore_1.getDocs)(CartQuery);
             const data = [];
-            userCartSnapshot.forEach((doc) => {
+            CartSnapshot.forEach((doc) => {
+                const d = doc.data();
+                data.push({
+                    id: doc.id,
+                    ...d,
+                });
+            });
+            return data;
+        },
+        orders: async (parent, { uid }) => {
+            const ordersCollection = (0, firestore_1.collection)(firebase_1.db, "orders");
+            const OrdersQuery = (0, firestore_1.query)(ordersCollection, (0, firestore_1.where)("uid", "==", uid));
+            const ordersSnapshot = await (0, firestore_1.getDocs)(OrdersQuery);
+            const data = [];
+            ordersSnapshot.forEach((doc) => {
                 const d = doc.data();
                 data.push({
                     id: doc.id,
@@ -78,16 +92,43 @@ const cartResolver = {
         },
         executePay: async (parent, { uid, ids }, info) => {
             const deleted = [];
+            const orderItems = [];
             const cartCollection = (0, firestore_1.collection)(firebase_1.db, "cart");
             const userCartQuery = (0, firestore_1.query)(cartCollection, (0, firestore_1.where)("uid", "==", uid));
             const cartSnapshot = await (0, firestore_1.getDocs)(userCartQuery);
+            // 주문 내역에 추가할 데이터 수집
             cartSnapshot.forEach((cartDoc) => {
                 if (ids.includes(cartDoc.id)) {
-                    (0, firestore_1.deleteDoc)((0, firestore_1.doc)(firebase_1.db, "cart", cartDoc.id));
+                    const cartData = cartDoc.data();
+                    orderItems.push({
+                        id: cartDoc.id,
+                        amount: cartData.amount,
+                        product: cartData.product,
+                    });
                     deleted.push(cartDoc.id);
                 }
             });
+            // 새로운 주문 내역 컬렉션에 추가
+            const ordersCollection = (0, firestore_1.collection)(firebase_1.db, "orders");
+            const orderPromises = orderItems.map((item) => (0, firestore_1.addDoc)(ordersCollection, { uid, ...item, createdAt: new Date() }));
+            await Promise.all(orderPromises);
+            // 카트에서 삭제
+            const deletePromises = deleted.map((id) => (0, firestore_1.deleteDoc)((0, firestore_1.doc)(firebase_1.db, "cart", id)));
+            await Promise.all(deletePromises);
             return deleted;
+        },
+        deleteOrders: async (parent, { ordersId }, info) => {
+            const ordersRef = (0, firestore_1.doc)(firebase_1.db, "cart", ordersId);
+            if (!ordersRef)
+                throw new Error("없는 데이터입니다");
+            await (0, firestore_1.deleteDoc)(ordersRef);
+            return ordersId;
+        },
+        deleteAllOrders: async (parent, args, info) => {
+            const ordersCollection = (0, firestore_1.collection)(firebase_1.db, "orders");
+            const orderSnap = await (0, firestore_1.getDocs)(ordersCollection);
+            orderSnap.forEach(async (doc) => await (0, firestore_1.deleteDoc)(doc.ref));
+            return "모든 주문 내역이 성공적으로 삭제되었습니다.";
         },
     },
     CartItem: {
