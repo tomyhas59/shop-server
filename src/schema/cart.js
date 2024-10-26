@@ -5,6 +5,7 @@ const cartSchema = (0, apollo_server_express_1.gql) `
   type CartItem {
     id: ID!
     amount: Int!
+    createdAt: String
     product: Product!
   }
 

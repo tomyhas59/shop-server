@@ -28,6 +28,7 @@ const cartResolver = {
                 data.push({
                     id: doc.id,
                     ...d,
+                    createdAt: d.createdAt instanceof firestore_1.Timestamp ? d.createdAt.toDate() : null,
                 });
             });
             return data;
@@ -101,7 +102,6 @@ const cartResolver = {
                 if (ids.includes(cartDoc.id)) {
                     const cartData = cartDoc.data();
                     orderItems.push({
-                        id: cartDoc.id,
                         amount: cartData.amount,
                         product: cartData.product,
                     });
@@ -110,7 +110,7 @@ const cartResolver = {
             });
             // 새로운 주문 내역 컬렉션에 추가
             const ordersCollection = (0, firestore_1.collection)(firebase_1.db, "orders");
-            const orderPromises = orderItems.map((item) => (0, firestore_1.addDoc)(ordersCollection, { uid, ...item, createdAt: new Date() }));
+            const orderPromises = orderItems.map((item) => (0, firestore_1.addDoc)(ordersCollection, { uid, ...item, createdAt: (0, firestore_1.serverTimestamp)() }));
             await Promise.all(orderPromises);
             // 카트에서 삭제
             const deletePromises = deleted.map((id) => (0, firestore_1.deleteDoc)((0, firestore_1.doc)(firebase_1.db, "cart", id)));
@@ -118,7 +118,7 @@ const cartResolver = {
             return deleted;
         },
         deleteOrders: async (parent, { ordersId }, info) => {
-            const ordersRef = (0, firestore_1.doc)(firebase_1.db, "cart", ordersId);
+            const ordersRef = (0, firestore_1.doc)(firebase_1.db, "orders", ordersId);
             if (!ordersRef)
                 throw new Error("없는 데이터입니다");
             await (0, firestore_1.deleteDoc)(ordersRef);

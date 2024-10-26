@@ -1,5 +1,6 @@
 import {
   DocumentData,
+  Timestamp,
   addDoc,
   collection,
   deleteDoc,
@@ -7,6 +8,7 @@ import {
   getDoc,
   getDocs,
   query,
+  serverTimestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -44,6 +46,8 @@ const cartResolver: Resolvers = {
         data.push({
           id: doc.id,
           ...d,
+          createdAt:
+            d.createdAt instanceof Timestamp ? d.createdAt.toDate() : null,
         });
       });
 
@@ -128,7 +132,6 @@ const cartResolver: Resolvers = {
         if (ids.includes(cartDoc.id)) {
           const cartData = cartDoc.data() as CartItem;
           orderItems.push({
-            id: cartDoc.id,
             amount: cartData.amount,
             product: cartData.product,
           });
@@ -139,7 +142,7 @@ const cartResolver: Resolvers = {
       // 새로운 주문 내역 컬렉션에 추가
       const ordersCollection = collection(db, "orders");
       const orderPromises = orderItems.map((item) =>
-        addDoc(ordersCollection, { uid, ...item, createdAt: new Date() })
+        addDoc(ordersCollection, { uid, ...item, createdAt: serverTimestamp() })
       );
       await Promise.all(orderPromises);
 
@@ -152,7 +155,7 @@ const cartResolver: Resolvers = {
       return deleted;
     },
     deleteOrders: async (parent, { ordersId }, info) => {
-      const ordersRef = doc(db, "cart", ordersId);
+      const ordersRef = doc(db, "orders", ordersId);
       if (!ordersRef) throw new Error("없는 데이터입니다");
       await deleteDoc(ordersRef);
       return ordersId;

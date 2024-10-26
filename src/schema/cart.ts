@@ -1,10 +1,10 @@
-import { CartItem } from "./../resolvers/types";
 import { gql } from "apollo-server-express";
 
 const cartSchema = gql`
   type CartItem {
     id: ID!
     amount: Int!
+    createdAt: String
     product: Product!
   }
 
