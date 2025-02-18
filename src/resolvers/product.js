@@ -18,12 +18,19 @@ const productResolver = {
             const q = (0, firestore_1.query)(productsCollection, ...queryOptions, (0, firestore_1.limit)(PAGE_SIZE));
             const snapshot = await (0, firestore_1.getDocs)(q);
             const data = [];
-            snapshot.forEach((doc) => {
+            for (const productDoc of snapshot.docs) {
+                const productRef = (0, firestore_1.doc)(firebase_1.db, "products", productDoc.id);
+                const reviewsCollection = (0, firestore_1.collection)(firebase_1.db, "reviews");
+                const reviewsQuery = (0, firestore_1.query)(reviewsCollection, (0, firestore_1.where)("product", "==", productRef));
+                // 비동기 작업 기다리기
+                const reviewSnapshot = await (0, firestore_1.getDocs)(reviewsQuery);
+                const reviewsCount = reviewSnapshot.size;
                 data.push({
-                    id: doc.id,
-                    ...doc.data(),
+                    id: productDoc.id,
+                    ...productDoc.data(),
+                    reviewsCount,
                 });
-            });
+            }
             return data;
         },
         product: async (parent, { id }) => {

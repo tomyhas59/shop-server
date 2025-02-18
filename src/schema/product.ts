@@ -8,6 +8,7 @@ const productSchema = gql`
     title: String!
     description: String
     createdAt: String
+    reviewsCount: Int
   }
 
   extend type Query {
@@ -44,5 +45,6 @@ export default productSchema;
     title
     description
     createdAt
+    reviewsCount
   }
 `; */

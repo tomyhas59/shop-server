@@ -9,6 +9,7 @@ const productSchema = (0, apollo_server_express_1.gql) `
     title: String!
     description: String
     createdAt: String
+    reviewsCount: Int
   }
 
   extend type Query {
@@ -43,5 +44,6 @@ exports.default = productSchema;
     title
     description
     createdAt
+    reviewsCount
   }
 `; */

@@ -35,12 +35,26 @@ const productResolver: Resolvers = {
       const q = query(productsCollection, ...queryOptions, limit(PAGE_SIZE));
       const snapshot = await getDocs(q);
       const data: DocumentData[] = [];
-      snapshot.forEach((doc) => {
+
+      for (const productDoc of snapshot.docs) {
+        const productRef = doc(db, "products", productDoc.id);
+        const reviewsCollection = collection(db, "reviews");
+        const reviewsQuery = query(
+          reviewsCollection,
+          where("product", "==", productRef)
+        );
+
+        // 비동기 작업 기다리기
+        const reviewSnapshot = await getDocs(reviewsQuery);
+        const reviewsCount = reviewSnapshot.size;
+
         data.push({
-          id: doc.id,
-          ...doc.data(),
+          id: productDoc.id,
+          ...productDoc.data(),
+          reviewsCount,
         });
-      });
+      }
+
       return data;
     },
     product: async (parent, { id }) => {
