@@ -85,6 +85,15 @@ const cartResolver = {
             await (0, firestore_1.deleteDoc)(cartRef);
             return cartId;
         },
+        deleteSelectedCart: async (parent, { ids }, info) => {
+            const cartCollection = (0, firestore_1.collection)(firebase_1.db, "cart");
+            const batch = (0, firestore_1.writeBatch)(firebase_1.db);
+            ids.forEach((cartId) => {
+                const cartRef = (0, firestore_1.doc)(cartCollection, cartId);
+                batch.delete(cartRef);
+            });
+            await batch.commit();
+        },
         deleteAllCart: async (parent, args, info) => {
             const cartCollection = (0, firestore_1.collection)(firebase_1.db, "cart");
             const cartSnap = await (0, firestore_1.getDocs)(cartCollection);
@@ -117,18 +126,27 @@ const cartResolver = {
             await Promise.all(deletePromises);
             return deleted;
         },
-        deleteOrders: async (parent, { ordersId }, info) => {
-            const ordersRef = (0, firestore_1.doc)(firebase_1.db, "orders", ordersId);
-            if (!ordersRef)
+        deleteOrder: async (parent, { orderId }, info) => {
+            const orderRef = (0, firestore_1.doc)(firebase_1.db, "order", orderId);
+            if (!orderRef)
                 throw new Error("없는 데이터입니다");
-            await (0, firestore_1.deleteDoc)(ordersRef);
-            return ordersId;
+            await (0, firestore_1.deleteDoc)(orderRef);
+            return orderId;
         },
         deleteAllOrders: async (parent, args, info) => {
             const ordersCollection = (0, firestore_1.collection)(firebase_1.db, "orders");
             const orderSnap = await (0, firestore_1.getDocs)(ordersCollection);
             orderSnap.forEach(async (doc) => await (0, firestore_1.deleteDoc)(doc.ref));
             return "모든 주문 내역이 성공적으로 삭제되었습니다.";
+        },
+        deleteSelectedOrders: async (parent, { ids }, info) => {
+            const ordersCollection = (0, firestore_1.collection)(firebase_1.db, "orders");
+            const batch = (0, firestore_1.writeBatch)(firebase_1.db);
+            ids.forEach((orderId) => {
+                const orderRef = (0, firestore_1.doc)(ordersCollection, orderId);
+                batch.delete(orderRef);
+            });
+            await batch.commit();
         },
     },
     CartItem: {

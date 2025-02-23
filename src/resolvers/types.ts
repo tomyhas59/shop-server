@@ -5,6 +5,7 @@ export type Resolvers = {
       args: { [key: string]: any },
       context: {
         db: {
+          collection(arg0: string): unknown;
           cart: Cart;
           products: Products;
           reviews: Reviews;

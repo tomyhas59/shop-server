@@ -11,6 +11,7 @@ import {
   serverTimestamp,
   updateDoc,
   where,
+  writeBatch,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { CartItem, Resolvers } from "./types";
@@ -111,6 +112,16 @@ const cartResolver: Resolvers = {
       await deleteDoc(cartRef);
       return cartId;
     },
+    deleteSelectedCart: async (parent, { ids }, info) => {
+      const cartCollection = collection(db, "cart");
+      const batch = writeBatch(db);
+      ids.forEach((cartId: string | undefined) => {
+        const cartRef = doc(cartCollection, cartId);
+        batch.delete(cartRef);
+      });
+      await batch.commit();
+    },
+
     deleteAllCart: async (parent, args, info) => {
       const cartCollection = collection(db, "cart");
       const cartSnap = await getDocs(cartCollection);
@@ -154,11 +165,12 @@ const cartResolver: Resolvers = {
 
       return deleted;
     },
-    deleteOrders: async (parent, { ordersId }, info) => {
-      const ordersRef = doc(db, "orders", ordersId);
-      if (!ordersRef) throw new Error("없는 데이터입니다");
-      await deleteDoc(ordersRef);
-      return ordersId;
+
+    deleteOrder: async (parent, { orderId }, info) => {
+      const orderRef = doc(db, "order", orderId);
+      if (!orderRef) throw new Error("없는 데이터입니다");
+      await deleteDoc(orderRef);
+      return orderId;
     },
     deleteAllOrders: async (parent, args, info) => {
       const ordersCollection = collection(db, "orders");
@@ -166,6 +178,15 @@ const cartResolver: Resolvers = {
       orderSnap.forEach(async (doc) => await deleteDoc(doc.ref));
 
       return "모든 주문 내역이 성공적으로 삭제되었습니다.";
+    },
+    deleteSelectedOrders: async (parent, { ids }, info) => {
+      const ordersCollection = collection(db, "orders");
+      const batch = writeBatch(db);
+      ids.forEach((orderId: string | undefined) => {
+        const orderRef = doc(ordersCollection, orderId);
+        batch.delete(orderRef);
+      });
+      await batch.commit();
     },
   },
 
