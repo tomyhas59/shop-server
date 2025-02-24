@@ -127,7 +127,7 @@ const cartResolver = {
             return deleted;
         },
         deleteOrder: async (parent, { orderId }, info) => {
-            const orderRef = (0, firestore_1.doc)(firebase_1.db, "order", orderId);
+            const orderRef = (0, firestore_1.doc)(firebase_1.db, "orders", orderId);
             if (!orderRef)
                 throw new Error("없는 데이터입니다");
             await (0, firestore_1.deleteDoc)(orderRef);

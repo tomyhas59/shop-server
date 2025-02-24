@@ -167,7 +167,7 @@ const cartResolver: Resolvers = {
     },
 
     deleteOrder: async (parent, { orderId }, info) => {
-      const orderRef = doc(db, "order", orderId);
+      const orderRef = doc(db, "orders", orderId);
       if (!orderRef) throw new Error("없는 데이터입니다");
       await deleteDoc(orderRef);
       return orderId;
