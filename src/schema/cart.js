@@ -20,11 +20,11 @@ const cartSchema = (0, apollo_server_express_1.gql) `
     updateCart(cartId: ID!, amount: Int!): CartItem!
     deleteCart(cartId: ID!): ID!
     deleteAllCart: ID!
-    deleteSelectedCart(ids: [ID!]): [ID!]!
+    deleteSelectedCart(ids: [ID!]): [ID!]
     executePay(uid: ID!, ids: [ID!]): [ID!]
     deleteOrder(orderId: ID!): ID!
     deleteAllOrders: ID!
-    deleteSelectedOrders(ids: [ID!]): [ID!]!
+    deleteSelectedOrders(ids: [ID!]): [ID!]
   }
 `;
 exports.default = cartSchema;
