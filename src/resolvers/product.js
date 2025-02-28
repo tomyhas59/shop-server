@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const firebase_1 = require("../../firebase");
 const firestore_1 = require("firebase/firestore");
-const PAGE_SIZE = 15;
+const PAGE_SIZE = 10;
 const productResolver = {
     Query: {
         products: async (parent, 
