@@ -51,7 +51,6 @@ const signUpResolver: Resolvers = {
       console.log(userCredential.user.uid);
       const newUser = {
         email,
-        password,
         nickname,
         uid: userCredential.user.uid,
       };
