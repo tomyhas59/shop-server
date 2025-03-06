@@ -5,6 +5,9 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updatePassword,
 } from "firebase/auth";
 import {
   addDoc,
@@ -61,40 +64,6 @@ const signUpResolver: Resolvers = {
       return {
         ...snapshot.data(),
       };
-    },
-
-    signIn: async (_, { email, password }) => {
-      try {
-        if (!email) {
-          throw new Error("이메일을 입력해주세요.");
-        }
-
-        const auth = getAuth();
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const user = userCredential.user;
-
-        return {
-          uid: user.uid,
-          email: user.email,
-        };
-      } catch (error: any) {
-        throw new Error("이메일 또는 비밀번호가 다릅니다.");
-      }
-    },
-
-    signOut: async () => {
-      try {
-        const auth = getAuth();
-        await signOut(auth);
-        return true;
-      } catch (error) {
-        console.error("로그아웃 실패");
-        throw new Error("로그아웃 실패");
-      }
     },
   },
 };

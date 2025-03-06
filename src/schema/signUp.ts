@@ -13,18 +13,12 @@ const signUpSchema = gql`
     nickname: String
   }
 
-  type SignIn {
-    uid: ID!
-    email: String!
-  }
   extend type Query {
     user: User
   }
 
   extend type Mutation {
     signUp(email: String, password: String, nickname: String): SignUp
-    signIn(email: String!, password: String!): SignIn!
-    signOut: Boolean
   }
 `;
 

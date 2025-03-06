@@ -23,7 +23,6 @@ const signUpResolver = {
             console.log(userCredential.user.uid);
             const newUser = {
                 email,
-                password,
                 nickname,
                 uid: userCredential.user.uid,
             };
@@ -50,15 +49,29 @@ const signUpResolver = {
                 throw new Error("이메일 또는 비밀번호가 다릅니다.");
             }
         },
-        signOut: async () => {
+        changePassword: async (_, { oldPassword, newPassword }) => {
             try {
                 const auth = (0, auth_1.getAuth)();
-                await (0, auth_1.signOut)(auth);
+                const user = auth.currentUser;
+                console.log("-------------", oldPassword, newPassword, user);
+                if (!user || !user.email) {
+                    throw new Error("사용자가 로그인되지 않았거나 이메일이 없습니다.");
+                }
+                // 기존 비밀번호로 인증을 위한 Credential 생성
+                const credential = auth_1.EmailAuthProvider.credential(user.email, oldPassword);
+                // 사용자 재인증
+                console.log("재인증 중...");
+                await (0, auth_1.reauthenticateWithCredential)(user, credential);
+                console.log("재인증 성공, 비밀번호 변경 중...");
+                await (0, auth_1.updatePassword)(user, newPassword);
+                console.log("비밀번호 변경 성공");
                 return true;
             }
             catch (error) {
-                console.error("로그아웃 실패");
-                throw new Error("로그아웃 실패");
+                if (error.code === "auth/wrong-password") {
+                    throw new Error("기존 비밀번호가 틀립니다.");
+                }
+                throw new Error("비밀번호 변경에 실패했습니다.");
             }
         },
     },

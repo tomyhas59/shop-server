@@ -25,7 +25,7 @@ const signUpSchema = (0, apollo_server_express_1.gql) `
   extend type Mutation {
     signUp(email: String, password: String, nickname: String): SignUp
     signIn(email: String!, password: String!): SignIn!
-    signOut: Boolean
+    changePassword(oldPassword: String, newPassword: String): Boolean
   }
 `;
 exports.default = signUpSchema;
